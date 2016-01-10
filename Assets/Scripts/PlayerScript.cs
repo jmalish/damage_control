@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class PlayerScript : MonoBehaviour {
@@ -7,11 +8,12 @@ public class PlayerScript : MonoBehaviour {
     public float accelSpeed = 40;
     public float turnSpeed = 10;
     public GameObject bullet;
+    public Text scoreboard_health;
 
     void FixedUpdate()
     {
-    //    var mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    //    Quaternion rot = Quaternion.LookRotation(transform.position - mousepos, Vector3.forward);
+        //var mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //Quaternion rot = Quaternion.LookRotation(transform.position - mousepos, Vector3.forward);
         //transform.rotation = rot;
         //transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z);
 
@@ -49,6 +51,15 @@ public class PlayerScript : MonoBehaviour {
         }
     }
 
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        Debug.Log("hit");
+        if (coll.gameObject.tag.Contains("Enemy"))
+        {
+            HitByWeapon(1);
+        }
+    }
+    
     void HitByWeapon(int damage)
     {
         health -= damage;  // health equals health minus damage received
@@ -57,5 +68,7 @@ public class PlayerScript : MonoBehaviour {
         {
             Destroy(gameObject);  // if health is less than or equal to 0, it's dead
         }
+
+        scoreboard_health.text = "Health: " + health;
     }
 }

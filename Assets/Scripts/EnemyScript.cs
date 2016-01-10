@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 
 public class EnemyScript : MonoBehaviour {
@@ -7,7 +6,6 @@ public class EnemyScript : MonoBehaviour {
     public float speed;
     public float health;
     public Transform player;
-    public Text scoreboard;
 
     void FixedUpdate()
     {
@@ -17,6 +15,7 @@ public class EnemyScript : MonoBehaviour {
         transform.eulerAngles = new Vector3(0, 0, z);
 
         GetComponent<Rigidbody2D>().AddForce(gameObject.transform.up * speed);
+
 
     }
 
@@ -28,5 +27,7 @@ public class EnemyScript : MonoBehaviour {
         {
             Destroy(gameObject);  // if health is less than or equal to 0, it's dead
         }
+
+
     }
 }
