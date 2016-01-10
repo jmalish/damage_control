@@ -70,7 +70,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\BulletScript.cs" />
     <Compile Include="Assets\Scripts\EnemyScript.cs" />
-    <Compile Include="Assets\Scripts\PlayerMobility.cs" />
+    <Compile Include="Assets\Scripts\PlayerScript.cs" />
     <Compile Include="Assets\Scripts\SolidLaser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />

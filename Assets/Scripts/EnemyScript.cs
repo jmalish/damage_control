@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class EnemyScript : MonoBehaviour {
 
     public float speed;
+    public float health;
     public Transform player;
+    public Text scoreboard;
 
     void FixedUpdate()
     {
@@ -15,5 +18,15 @@ public class EnemyScript : MonoBehaviour {
 
         GetComponent<Rigidbody2D>().AddForce(gameObject.transform.up * speed);
 
+    }
+
+    void HitByWeapon(int damage)
+    {
+        health -= damage;  // health equals health minus damage received 
+
+        if (health <= 0)
+        {
+            Destroy(gameObject);  // if health is less than or equal to 0, it's dead
+        }
     }
 }
