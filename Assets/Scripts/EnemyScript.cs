@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class EnemyScript : MonoBehaviour {
@@ -6,6 +7,7 @@ public class EnemyScript : MonoBehaviour {
     public float speed;
     public float health;
     public Transform player;
+    float distanceFromPlayer;
 
     void FixedUpdate()
     {
@@ -16,6 +18,11 @@ public class EnemyScript : MonoBehaviour {
 
         GetComponent<Rigidbody2D>().AddForce(gameObject.transform.up * speed);
 
+        distanceFromPlayer = Vector3.Distance(player.position, transform.position);
+        if (distanceFromPlayer > 40)
+        {
+            Destroy(gameObject);  // enemy is too far away, despawn them
+        }
 
     }
 
@@ -27,7 +34,5 @@ public class EnemyScript : MonoBehaviour {
         {
             Destroy(gameObject);  // if health is less than or equal to 0, it's dead
         }
-
-
     }
 }

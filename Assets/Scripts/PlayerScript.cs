@@ -1,31 +1,43 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 public class PlayerScript : MonoBehaviour {
-
+    // ship variables
     public float health = 100;
     public float accelSpeed = 40;
     public float turnSpeed = 10;
     public GameObject bullet;
+
+    // UI Variables
     public Text scoreboard_health;
+    public Text scoreboard_damage;
+    public RectTransform healthBar;
+    private float healthBarLocationY, healthBarLocationX;
 
-    void FixedUpdate()
+
+    void Start()
     {
-        //var mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //Quaternion rot = Quaternion.LookRotation(transform.position - mousepos, Vector3.forward);
-        //transform.rotation = rot;
-        //transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z);
-
-        float accel = Input.GetAxis("Vertical");
-        GetComponent<Rigidbody2D>().AddForce(gameObject.transform.up * accelSpeed * accel);
-
-        float turn = Input.GetAxis("Horizontal");
-        GetComponent<Rigidbody2D>().transform.Rotate(Vector3.back * turn * turnSpeed);  // if we want to turn ship with a and d versus point towards mouse
+        healthBarLocationY = healthBar.position.y;
+        healthBarLocationX = healthBar.position.x;
     }
 
     void Update()
     {
+        // Movement
+        float accel = Input.GetAxis("Vertical");
+        if (accel > 0)
+        {
+            GetComponent<Rigidbody2D>().AddForce(gameObject.transform.up * accelSpeed * accel);
+        }
+        else if (accel < 0)
+        {
+            GetComponent<Rigidbody2D>().AddForce(gameObject.transform.up * accelSpeed * accel/2);
+        }
+
+        float turn = Input.GetAxis("Horizontal");
+        GetComponent<Rigidbody2D>().transform.Rotate(Vector3.back * turn * turnSpeed);  // if we want to turn ship with a and d versus point towards mouse
+
+        // Weapons
         if (Input.GetButtonDown("Fire1"))
         {
             Vector3 localOffset = new Vector3(0, 2, 0);
@@ -51,16 +63,12 @@ public class PlayerScript : MonoBehaviour {
         }
     }
 
-    void OnCollisionEnter2D(Collision2D coll)
+    void OnCollisionStay2D(Collision2D coll)
     {
-        Debug.Log("hit");
-        if (coll.gameObject.tag.Contains("Enemy"))
-        {
-            HitByWeapon(1);
-        }
+        HitByWeapon(.2f);
     }
-    
-    void HitByWeapon(int damage)
+
+    void HitByWeapon(float damage)
     {
         health -= damage;  // health equals health minus damage received
 
@@ -69,6 +77,9 @@ public class PlayerScript : MonoBehaviour {
             Destroy(gameObject);  // if health is less than or equal to 0, it's dead
         }
 
-        scoreboard_health.text = "Health: " + health;
+        scoreboard_health.text = "Health: " + Mathf.Round(health).ToString();
+        scoreboard_damage.text = "Damage: " + Mathf.Round(100 - health).ToString();
+
+        healthBar.position = new Vector3(healthBarLocationX - health, healthBarLocationY);
     }
 }

@@ -19,6 +19,9 @@ public class BulletScript : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D coll)  // when bullet hits something
     {
         coll.gameObject.SendMessage("HitByWeapon", damage); // tell item that was collided that we want to deal damage
-        Destroy(gameObject);  // delete bullet
+        if (!coll.collider.tag.ToLower().Contains("projectile"))
+        {   
+            Destroy(gameObject);  // delete bullet
+        }
     }
 }
