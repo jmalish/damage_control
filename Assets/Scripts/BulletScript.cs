@@ -5,15 +5,13 @@ public class BulletScript : MonoBehaviour {
 
     public int speed = 50;  // how fast the bullet is
     public int damage = 1;  // how much damage the bullet deals
+    float bulletLife = 2;
 
 	// Use this for initialization
-	void Update () {
-        GetComponent<Rigidbody2D>().AddForce(transform.up * speed);  // update bullets position
-    }
-	
-	void OnBecameInvisible()  // called when bullet goes off screen
+	void Update ()
     {
-        Destroy(gameObject);  // delete bullet
+        GetComponent<Rigidbody2D>().AddForce(transform.up * speed);  // update bullets position
+        Destroy(gameObject, bulletLife);  // delete bullet after time of life
     }
 
     void OnCollisionEnter2D(Collision2D coll)  // when bullet hits something
