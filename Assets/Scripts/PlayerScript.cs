@@ -11,14 +11,13 @@ public class PlayerScript : MonoBehaviour {
     // UI Variables
     public Text scoreboard_health;
     public Text scoreboard_damage;
-    public RectTransform healthBar;
-    private float healthBarLocationY, healthBarLocationX;
+    public Image healthbar;
+    private float healthBarScaleY;
 
 
     void Start()
     {
-        healthBarLocationY = healthBar.position.y;
-        healthBarLocationX = healthBar.position.x;
+        healthBarScaleY = healthbar.rectTransform.transform.localScale.y;
     }
 
     void Update()
@@ -65,7 +64,17 @@ public class PlayerScript : MonoBehaviour {
 
     void OnCollisionStay2D(Collision2D coll)
     {
-        HitByWeapon(.2f);
+        string collTag = coll.gameObject.tag.ToLower();
+
+        if (collTag.Contains("health") || collTag.Contains("medic"))
+        {
+            HitByWeapon(-.5f);
+        }
+        else
+        {
+            HitByWeapon(.2f);
+        }
+        
     }
 
     void HitByWeapon(float damage)
@@ -75,11 +84,16 @@ public class PlayerScript : MonoBehaviour {
         if (health <= 0)
         {
             Destroy(gameObject);  // if health is less than or equal to 0, it's dead
+        } 
+        else if (health >= 100)
+        {
+            health = 100;
         }
 
+        //scoreboard_health.text = "Health: " + Mathf.Round(health).ToString();
         scoreboard_health.text = "Health: " + Mathf.Round(health).ToString();
         scoreboard_damage.text = "Damage: " + Mathf.Round(100 - health).ToString();
 
-        healthBar.position = new Vector3(healthBarLocationX - health, healthBarLocationY);
+        healthbar.rectTransform.localScale = new Vector3(health / 100, healthBarScaleY);
     }
 }
