@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LaserScript : MonoBehaviour {
+public class SolidLaser : MonoBehaviour {
 
     LineRenderer line;
 
 	void Start()
     {
-        line = gameObject.GetComponent<LineRenderer>();
+        line = GetComponent<LineRenderer>();
         line.enabled = false;
     }
 
@@ -28,24 +28,30 @@ public class LaserScript : MonoBehaviour {
         {
             //line.GetComponent<Renderer>().material.mainTextureOffset = new Vector2(0, Time.time);  // makes laser "rotate", gives it movement
 
-            Ray ray = new Ray(transform.position, transform.forward);
-            RaycastHit hit;
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, 1000);
 
-            line.SetPosition(0, ray.origin);
 
-            if (Physics.Raycast(ray, out hit, 100))
+            if (hit)
             {
+                line.SetPosition(0, transform.position);
                 line.SetPosition(1, hit.point);
-                if (hit.rigidbody)
+                
+                try
                 {
+                    hit.collider.SendMessage("HitByWeapon", 1);
                     hit.rigidbody.AddForceAtPosition(transform.forward * 5, hit.point);
                 }
-            } else
-            {
-                line.SetPosition(1, ray.GetPoint(1000));
+                catch
+                {
+                    // do nothing
+                }
+                
             }
-
-            line.SetPosition(1, ray.GetPoint(100));
+            else
+            {
+                line.SetPosition(0, transform.position);
+                line.SetPosition(1, transform.position + (transform.forward * 1000));
+            }
 
             yield return null;
         }

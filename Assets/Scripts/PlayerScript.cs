@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class PlayerScript : MonoBehaviour {
     // ship variables
@@ -17,7 +18,6 @@ public class PlayerScript : MonoBehaviour {
     public Image healthbar;
     float healthBarScaleY, attackTime;
     public float attackRepeatTime = .25f;
-
 
     void Start()
     {
@@ -44,7 +44,6 @@ public class PlayerScript : MonoBehaviour {
         if ((Input.GetButton("Fire1")) && (Time.time > attackTime))
         {
             FireWeapon();
-            attackTime = Time.time + attackRepeatTime;  // reset attack timer
         }
     }
 
@@ -85,17 +84,23 @@ public class PlayerScript : MonoBehaviour {
 
     void FireWeapon()
     {
+        LineRenderer laser = GetComponentInChildren<LineRenderer>();
 
         if (health >= 75)  // if health is between 75 and 100
         {
+            laser.enabled = false;
             Vector3 localOffset = new Vector3(0, 2.25f, 0);
             Vector3 worldOffset = transform.rotation * localOffset;
             Vector3 spawnPos = transform.position + worldOffset;
 
             Instantiate(attackStage1, spawnPos, transform.rotation);  // spawn bullet
+
+            attackTime = Time.time + attackRepeatTime;  // reset attack timer
         }
         else if ((health >= 50) && (health < 75)) // if health is between 50 and 75
         {
+            laser.enabled = false;
+
             // multi shot
             Vector3 localOffset = new Vector3(-1.25f, .75f, 0);
             Vector3 worldOffset = transform.rotation * localOffset;
@@ -115,14 +120,16 @@ public class PlayerScript : MonoBehaviour {
 
             Instantiate(attackStage2, spawnPos, transform.rotation);  // spawn right bullet
             // multi shot
+
+            attackTime = Time.time + attackRepeatTime;  // reset attack timer
         }
         else if ((health >= 25) && (health < 50)) // if health is between 25 and 50
         {
-
+            laser.enabled = true;
         }
         else if ((health >= 00) && (health < 25)) // if health is between 00 and 25
         {
-
+            laser.enabled = false;
         }
     }
 }
