@@ -12,7 +12,9 @@ public class PlayerScript : MonoBehaviour {
     public Text scoreboard_health;
     public Text scoreboard_damage;
     public Image healthbar;
-    private float healthBarScaleY;
+    float healthBarScaleY, attackTime;
+    float distanceToAttack = 25;
+    public float attackRepeatTime = .25f;
 
 
     void Start()
@@ -37,28 +39,10 @@ public class PlayerScript : MonoBehaviour {
         GetComponent<Rigidbody2D>().transform.Rotate(Vector3.back * turn * turnSpeed);  // if we want to turn ship with a and d versus point towards mouse
 
         // Weapons
-        if (Input.GetButtonDown("Fire1"))
+        if ((Input.GetButton("Fire1")) && (Time.time > attackTime))
         {
-            Vector3 localOffset = new Vector3(0, 2, 0);
-            Vector3 worldOffset = transform.rotation * localOffset;
-            Vector3 spawnPos = transform.position + worldOffset;
-
-            if (health >= 75)  // if health is between 75 and 100
-            {
-                Instantiate(bullet, spawnPos, transform.rotation);  // spawn bullet
-            }
-            else if ((health >= 50) && (health < 75)) // if health is between 50 and 75
-            {
-
-            }
-            else if ((health >= 25) && (health < 50)) // if health is between 25 and 50
-            {
-
-            }
-            else if ((health >= 00) && (health < 25)) // if health is between 00 and 25
-            {
-
-            }
+            FireWeapon();
+            attackTime = Time.time + attackRepeatTime;  // reset attack timer
         }
     }
 
@@ -95,5 +79,29 @@ public class PlayerScript : MonoBehaviour {
         scoreboard_damage.text = "Damage: " + Mathf.Round(100 - health).ToString();
 
         healthbar.rectTransform.localScale = new Vector3(health / 100, healthBarScaleY);
+    }
+
+    void FireWeapon()
+    {
+        Vector3 localOffset = new Vector3(0, 2.25f, 0);
+        Vector3 worldOffset = transform.rotation * localOffset;
+        Vector3 spawnPos = transform.position + worldOffset;
+
+        if (health >= 75)  // if health is between 75 and 100
+        {
+            Instantiate(bullet, spawnPos, transform.rotation);  // spawn bullet
+        }
+        else if ((health >= 50) && (health < 75)) // if health is between 50 and 75
+        {
+
+        }
+        else if ((health >= 25) && (health < 50)) // if health is between 25 and 50
+        {
+
+        }
+        else if ((health >= 00) && (health < 25)) // if health is between 00 and 25
+        {
+
+        }
     }
 }
