@@ -1,0 +1,222 @@
+fileFormatVersion: 2
+guid: cc7d3ffe5b46cd54e817e9cceda84ade
+timeCreated: 1452696108
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: enemy_ship1_parts_0
+    21300002: enemy_ship1_parts_1
+    21300004: enemy_ship1_parts_2
+    21300006: enemy_ship1_parts_3
+    21300008: enemy_ship1_parts_4
+    21300010: enemy_ship1_parts_5
+    21300012: enemy_ship1_parts_6
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: enemy_ship1_parts_0
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 659
+        width: 312
+        height: 304
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 156, y: 67}
+        - {x: 59, y: 152}
+        - {x: 8, y: 152}
+        - {x: 9, y: 11}
+        - {x: 16, y: -46}
+        - {x: -85, y: 21}
+        - {x: -124, y: 23}
+        - {x: -156, y: -13}
+        - {x: -156, y: -64}
+        - {x: -14, y: -152}
+        - {x: 47, y: -152}
+        - {x: 62, y: -125}
+        - {x: 74, y: -102}
+        - {x: 156, y: 33}
+    - name: enemy_ship1_parts_1
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 732
+        width: 177
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 23.5, y: 115.5}
+        - {x: -46.5, y: 115.5}
+        - {x: -80.5, y: 81.5}
+        - {x: -88.5, y: 24.5}
+        - {x: -88.5, y: 11.5}
+        - {x: 53.5, y: -102.5}
+        - {x: 83.5, y: -115.5}
+        - {x: 88.5, y: -115.5}
+        - {x: 88.5, y: 20.5}
+        - {x: 56.5, y: 84.5}
+    - name: enemy_ship1_parts_2
+      rect:
+        serializedVersion: 2
+        x: 687
+        y: 688
+        width: 283
+        height: 211
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 74.5, y: 62.5}
+        - {x: 39.5, y: 27.5}
+        - {x: -9.5, y: 88.5}
+        - {x: -73.5, y: 105.5}
+        - {x: -83.5, y: 105.5}
+        - {x: -126.5, y: 29.5}
+        - {x: -141.5, y: -4.5}
+        - {x: -141.5, y: -17.5}
+        - {x: -68.5, y: -105.5}
+        - {x: 86.5, y: -105.5}
+        - {x: 141.5, y: -17.5}
+        - {x: 141.5, y: 56.5}
+        - {x: 107.5, y: 62.5}
+    - name: enemy_ship1_parts_3
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 198
+        width: 233
+        height: 363
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 116.5, y: 64.5}
+        - {x: 116.5, y: 92.5}
+        - {x: 30.5, y: 181.5}
+        - {x: 22.5, y: 181.5}
+        - {x: -28.5, y: 83.5}
+        - {x: -27.5, y: 51.5}
+        - {x: -25.5, y: 49.5}
+        - {x: -63.5, y: -47.5}
+        - {x: -116.5, y: -76.5}
+        - {x: -116.5, y: -101.5}
+        - {x: -111.5, y: -144.5}
+        - {x: -101.5, y: -181.5}
+        - {x: -55.5, y: -181.5}
+        - {x: 7.5, y: -151.5}
+        - {x: 113.5, y: -3.5}
+        - {x: 109.5, y: 22.5}
+    - name: enemy_ship1_parts_4
+      rect:
+        serializedVersion: 2
+        x: 395
+        y: 409
+        width: 292
+        height: 182
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 106, y: 24}
+        - {x: -10, y: 91}
+        - {x: -38, y: 91}
+        - {x: -144, y: -41}
+        - {x: -146, y: -51}
+        - {x: -146, y: -91}
+        - {x: -63, y: -91}
+        - {x: -49, y: -88}
+        - {x: -33, y: -91}
+        - {x: 40, y: -91}
+        - {x: 146, y: -33}
+        - {x: 146, y: -21}
+    - name: enemy_ship1_parts_5
+      rect:
+        serializedVersion: 2
+        x: 733
+        y: 380
+        width: 220
+        height: 167
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -110, y: 2.5}
+        - {x: 49, y: -83.5}
+        - {x: 110, y: -83.5}
+        - {x: 110, y: 22.5}
+        - {x: 100, y: 83.5}
+        - {x: -11, y: 83.5}
+        - {x: -110, y: 20.5}
+    - name: enemy_ship1_parts_6
+      rect:
+        serializedVersion: 2
+        x: 395
+        y: 53
+        width: 194
+        height: 200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 87, y: 100}
+        - {x: 29, y: 100}
+        - {x: -45, y: 92}
+        - {x: -97, y: 30}
+        - {x: -97, y: -100}
+        - {x: -60, y: -100}
+        - {x: 97, y: -5}
+        - {x: 97, y: 20}
+        - {x: 93, y: 57}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

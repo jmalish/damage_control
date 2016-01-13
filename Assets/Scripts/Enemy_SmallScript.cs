@@ -7,7 +7,7 @@ public class Enemy_SmallScript : MonoBehaviour {
     public float speed = 20;
     public float health = 4;
     public Transform player;
-    public GameObject weapon;
+    public GameObject weapon, destroyedShip;
 
     float distanceFromPlayer, attackTime;
     float distanceToAttack = 25;
@@ -29,7 +29,7 @@ public class Enemy_SmallScript : MonoBehaviour {
         }
         else if ((distanceFromPlayer < distanceToAttack) && (Time.time > attackTime))  // make sure enemy is close enough, and keep it from shooting a billion bullets at once
         {
-            FireWeapon();
+            //FireWeapon();
             attackTime = Time.time + attackRepeatTime;  // reset attack timer
         }
     }
@@ -40,13 +40,14 @@ public class Enemy_SmallScript : MonoBehaviour {
 
         if (health <= 0)
         {
+            var offsetPos = new Vector3(transform.position.x - .35f, transform.position.y - .4f);
+            Instantiate(destroyedShip, offsetPos, transform.rotation);  // spawn 
             Destroy(gameObject);  // if health is less than or equal to 0, it's dead
         }
     }
 
     void FireWeapon()
     {
-        Debug.Log("Firing");
         Vector3 localOffset = new Vector3(0, 2, 0);
         Vector3 worldOffset = transform.rotation * localOffset;
         Vector3 spawnPos = transform.position + worldOffset;

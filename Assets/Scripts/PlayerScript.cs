@@ -16,7 +16,6 @@ public class PlayerScript : MonoBehaviour {
     public Text scoreboard_damage;
     public Image healthbar;
     float healthBarScaleY, attackTime;
-    float distanceToAttack = 25;
     public float attackRepeatTime = .25f;
 
 
@@ -57,11 +56,11 @@ public class PlayerScript : MonoBehaviour {
         {
             HitByWeapon(-.5f);
         }
+        else if (collTag.Contains("dead")) { } // do nothing
         else
         {
             HitByWeapon(.2f);
         }
-        
     }
 
     void HitByWeapon(float damage)
