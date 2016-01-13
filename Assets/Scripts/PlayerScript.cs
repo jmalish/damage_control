@@ -6,7 +6,10 @@ public class PlayerScript : MonoBehaviour {
     public float health = 100;
     public float accelSpeed = 40;
     public float turnSpeed = 10;
-    public GameObject bullet;
+    public GameObject attackStage1;
+    public GameObject attackStage2;
+    public GameObject attackStage3;
+    public GameObject attackStage4;
 
     // UI Variables
     public Text scoreboard_health;
@@ -83,17 +86,36 @@ public class PlayerScript : MonoBehaviour {
 
     void FireWeapon()
     {
-        Vector3 localOffset = new Vector3(0, 2.25f, 0);
-        Vector3 worldOffset = transform.rotation * localOffset;
-        Vector3 spawnPos = transform.position + worldOffset;
 
         if (health >= 75)  // if health is between 75 and 100
         {
-            Instantiate(bullet, spawnPos, transform.rotation);  // spawn bullet
+            Vector3 localOffset = new Vector3(0, 2.25f, 0);
+            Vector3 worldOffset = transform.rotation * localOffset;
+            Vector3 spawnPos = transform.position + worldOffset;
+
+            Instantiate(attackStage1, spawnPos, transform.rotation);  // spawn bullet
         }
         else if ((health >= 50) && (health < 75)) // if health is between 50 and 75
         {
+            // multi shot
+            Vector3 localOffset = new Vector3(-1.25f, .75f, 0);
+            Vector3 worldOffset = transform.rotation * localOffset;
+            Vector3 spawnPos = transform.position + worldOffset;
 
+            Instantiate(attackStage2, spawnPos, transform.rotation);  // spawn left bullet
+
+            localOffset = new Vector3(0, 2.25f, 0);
+            worldOffset = transform.rotation * localOffset;
+            spawnPos = transform.position + worldOffset;
+
+            Instantiate(attackStage2, spawnPos, transform.rotation);  // spawn center bullet
+
+            localOffset = new Vector3(1.25f, .75f, 0);
+            worldOffset = transform.rotation * localOffset;
+            spawnPos = transform.position + worldOffset;
+
+            Instantiate(attackStage2, spawnPos, transform.rotation);  // spawn right bullet
+            // multi shot
         }
         else if ((health >= 25) && (health < 50)) // if health is between 25 and 50
         {

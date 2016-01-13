@@ -8,7 +8,6 @@ public class Enemy_SmallScript : MonoBehaviour {
     public float health = 4;
     public Transform player;
     public GameObject weapon;
-    public Text distance;
 
     float distanceFromPlayer, attackTime;
     float distanceToAttack = 25;
@@ -24,7 +23,6 @@ public class Enemy_SmallScript : MonoBehaviour {
         GetComponent<Rigidbody2D>().AddForce(gameObject.transform.up * speed);
 
         distanceFromPlayer = Vector3.Distance(player.position, transform.position);
-        distance.text = distanceFromPlayer.ToString();
         if (distanceFromPlayer > 40)
         {
             Destroy(gameObject);  // enemy is too far away, despawn them
