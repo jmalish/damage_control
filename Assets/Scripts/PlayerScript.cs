@@ -21,13 +21,13 @@ public class PlayerScript : MonoBehaviour {
 
     // other variables
     LineRenderer laser;
+    IEnumerator laserCoroutine;
 
 
     void Start()
     {
         healthBarScaleY = healthbar.rectTransform.transform.localScale.y;
-        laser = gameObject.GetComponentInChildren<LineRenderer>();
-        laser.enabled = false;
+        laser = gameObject.GetComponent<LineRenderer>();
     }
 
     void Update()
@@ -50,6 +50,9 @@ public class PlayerScript : MonoBehaviour {
         if ((Input.GetButton("Fire1")) && (Time.time > attackTime))
         {
             FireWeapon();
+        } else
+        {
+            laser.enabled = false;
         }
     }
 
@@ -126,8 +129,35 @@ public class PlayerScript : MonoBehaviour {
         }
         else if ((health >= 25) && (health < 50)) // if health is between 25 and 50
         {
-            laser.SendMessage("StopCoroutine", "FireLaser");
-            laser.SendMessage("StartCoroutine", "FireLaser");
+            //line.GetComponent<Renderer>().material.mainTextureOffset = new Vector2(0, Time.time);  // makes laser "rotate", gives it movement
+
+            laser.enabled = true;
+            
+            Vector3 localOffset = new Vector3(0, 1.5f, 0);          // offset laser spawn
+            Vector3 worldOffset = transform.rotation * localOffset; // ^
+            Vector3 spawnPos = transform.position + worldOffset;    // ^
+
+            RaycastHit2D hit = Physics2D.Raycast(spawnPos, transform.up, 1000);  // create raycast
+
+            if (hit)
+            {
+                Debug.Log("hit");
+                laser.SetPosition(0, spawnPos);  // start of laser
+                laser.SetPosition(1, hit.point);  // end of laser, ends where the raycast hits something
+
+                try
+                {
+                    hit.collider.SendMessage("HitByWeapon", 1, SendMessageOptions.RequireReceiver);  // let object know it's been hit, deal x damage
+                    hit.rigidbody.AddForceAtPosition(transform.forward * 5, hit.point);  // push object that was hit
+                }
+                catch { }
+            }
+            else
+            {
+                Debug.Log("no hit");
+                laser.SetPosition(0, spawnPos);  // start of laser
+                laser.SetPosition(1, spawnPos + (transform.up * 1000));  // end of laser, since nothing is hit, just make it long enough to go offscreen
+            }
         }
         else if ((health >= 00) && (health < 25)) // if health is between 00 and 25
         {
