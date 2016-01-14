@@ -12,22 +12,38 @@ public class Enemy_SmallScript : MonoBehaviour {
     float distanceFromPlayer, attackTime;
     float distanceToAttack = 25;
     float attackRepeatTime = .5f;
-    
+
     void FixedUpdate()
     {
-        float zPos = Mathf.Atan2((player.transform.position.y - transform.position.y),
-            player.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90;
-
-        transform.eulerAngles = new Vector3(0, 0, zPos);
-
-        GetComponent<Rigidbody2D>().AddForce(gameObject.transform.up * speed);
-
         distanceFromPlayer = Vector3.Distance(player.position, transform.position);
+
+        #region movement
         if (distanceFromPlayer > 40)
         {
             Destroy(gameObject);  // enemy is too far away, despawn them
         }
-        else if ((distanceFromPlayer < distanceToAttack) && (Time.time > attackTime))  // make sure enemy is close enough, and keep it from shooting a billion bullets at once
+        else if (distanceFromPlayer > 10) { 
+            float zPos = Mathf.Atan2((player.transform.position.y - transform.position.y), player.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90;
+            transform.eulerAngles = new Vector3(0, 0, zPos);  // turn towards player
+
+            GetComponent<Rigidbody2D>().AddForce(gameObject.transform.up * speed);  // move towards player
+        }
+        else if ((distanceFromPlayer > 0) && (distanceFromPlayer <= 7))
+        {
+            float zPos = Mathf.Atan2((player.transform.position.y - transform.position.y), player.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90;
+            transform.eulerAngles = new Vector3(0, 0, zPos);  // turn towards player
+
+            GetComponent<Rigidbody2D>().AddForce(gameObject.transform.up * speed * -.5f);  // move towards player
+        }
+        else
+        {
+            float zPos = Mathf.Atan2((player.transform.position.y - transform.position.y), player.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90;
+            transform.eulerAngles = new Vector3(0, 0, zPos);  // turn towards player
+        }
+        #endregion movement
+
+        // make sure enemy is close enough, and keep it from shooting a billion bullets at once
+        if ((distanceFromPlayer < distanceToAttack) && (Time.time > attackTime))
         {
             FireWeapon();
             attackTime = Time.time + attackRepeatTime;  // reset attack timer
@@ -40,7 +56,7 @@ public class Enemy_SmallScript : MonoBehaviour {
 
         if (health <= 0)
         {
-            var offsetPos = new Vector3(transform.position.x - .35f, transform.position.y - .4f);
+            var offsetPos = new Vector3(transform.position.x + .21f, transform.position.y + .29f);
             Instantiate(destroyedShip, offsetPos, transform.rotation);  // spawn 
             Destroy(gameObject);  // if health is less than or equal to 0, it's dead
         }
