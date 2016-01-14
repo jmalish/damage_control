@@ -16,7 +16,10 @@ public class BulletScript : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D coll)  // when bullet hits something
     {
-        coll.gameObject.SendMessage("HitByWeapon", damage); // tell item that was collided that we want to deal damage
+        try
+        {
+            coll.gameObject.SendMessage("HitByWeapon", damage); // tell item that was collided that we want to deal damage
+        } catch { }
 
         var collTag = coll.collider.tag.ToLower();
         if (!(collTag.Contains("projectile") || collTag.Contains("dead")))

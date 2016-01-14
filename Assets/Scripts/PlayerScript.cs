@@ -11,17 +11,23 @@ public class PlayerScript : MonoBehaviour {
     public GameObject attackStage2;
     public GameObject attackStage3;
     public GameObject attackStage4;
+    public float attackRepeatTime = .25f;
 
     // UI Variables
     public Text scoreboard_health;
     public Text scoreboard_damage;
     public Image healthbar;
     float healthBarScaleY, attackTime;
-    public float attackRepeatTime = .25f;
+
+    // other variables
+    LineRenderer laser;
+
 
     void Start()
     {
         healthBarScaleY = healthbar.rectTransform.transform.localScale.y;
+        laser = gameObject.GetComponentInChildren<LineRenderer>();
+        laser.enabled = false;
     }
 
     void Update()
@@ -84,11 +90,8 @@ public class PlayerScript : MonoBehaviour {
 
     void FireWeapon()
     {
-        LineRenderer laser = GetComponentInChildren<LineRenderer>();
-
         if (health >= 75)  // if health is between 75 and 100
         {
-            laser.enabled = false;
             Vector3 localOffset = new Vector3(0, 2.25f, 0);
             Vector3 worldOffset = transform.rotation * localOffset;
             Vector3 spawnPos = transform.position + worldOffset;
@@ -99,8 +102,6 @@ public class PlayerScript : MonoBehaviour {
         }
         else if ((health >= 50) && (health < 75)) // if health is between 50 and 75
         {
-            laser.enabled = false;
-
             // multi shot
             Vector3 localOffset = new Vector3(-1.25f, .75f, 0);
             Vector3 worldOffset = transform.rotation * localOffset;
@@ -125,11 +126,12 @@ public class PlayerScript : MonoBehaviour {
         }
         else if ((health >= 25) && (health < 50)) // if health is between 25 and 50
         {
-            laser.enabled = true;
+            laser.SendMessage("StopCoroutine", "FireLaser");
+            laser.SendMessage("StartCoroutine", "FireLaser");
         }
         else if ((health >= 00) && (health < 25)) // if health is between 00 and 25
         {
-            laser.enabled = false;
+            
         }
     }
 }

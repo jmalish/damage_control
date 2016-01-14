@@ -11,7 +11,7 @@ public class SolidLaser : MonoBehaviour {
         line.enabled = false;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (Input.GetButtonDown("Fire1"))
         {
@@ -22,8 +22,10 @@ public class SolidLaser : MonoBehaviour {
 
     IEnumerator FireLaser()
     {
+        line = GetComponent<LineRenderer>();
+
         line.enabled = true;
-        
+
         while(Input.GetButton("Fire1"))
         {
             //line.GetComponent<Renderer>().material.mainTextureOffset = new Vector2(0, Time.time);  // makes laser "rotate", gives it movement
@@ -35,16 +37,9 @@ public class SolidLaser : MonoBehaviour {
             {
                 line.SetPosition(0, transform.position);
                 line.SetPosition(1, hit.point);
-                
-                try
-                {
-                    hit.collider.SendMessage("HitByWeapon", 1);
-                    hit.rigidbody.AddForceAtPosition(transform.forward * 5, hit.point);
-                }
-                catch
-                {
-                    // do nothing
-                }
+
+                hit.collider.SendMessage("HitByWeapon", 1);
+                hit.rigidbody.AddForceAtPosition(transform.forward * 5, hit.point);
                 
             }
             else
@@ -55,7 +50,6 @@ public class SolidLaser : MonoBehaviour {
 
             yield return null;
         }
-
         line.enabled = false;
     }
 }

@@ -29,7 +29,7 @@ public class Enemy_SmallScript : MonoBehaviour {
         }
         else if ((distanceFromPlayer < distanceToAttack) && (Time.time > attackTime))  // make sure enemy is close enough, and keep it from shooting a billion bullets at once
         {
-            //FireWeapon();
+            FireWeapon();
             attackTime = Time.time + attackRepeatTime;  // reset attack timer
         }
     }
