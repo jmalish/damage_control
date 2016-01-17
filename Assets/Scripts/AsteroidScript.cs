@@ -1,0 +1,41 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class AsteroidScript : MonoBehaviour {
+    public float health = 5;
+    public Transform player;
+    public GameObject healthPack, destroyedAsteroid;
+    float distanceFromPlayer;
+    public float damage = 1;
+	
+	void FixedUpdate () {
+        distanceFromPlayer = Vector3.Distance(player.position, transform.position);
+        if (distanceFromPlayer > 40)
+        {
+            Destroy(gameObject);  // enemy is too far away, despawn them
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D coll)  // when bullet hits something
+    {
+        coll.gameObject.SendMessage("TakeDamage", damage); // tell item that was collided that we want to deal damage
+    }
+
+    void TakeDamage(float damage)
+    {
+        health -= damage; 
+
+        if (health <= 0)
+        {
+            destroyed();
+        }
+    }
+
+    void destroyed()
+    {
+        Destroy(gameObject);
+        Instantiate(destroyedAsteroid, gameObject.transform.position, gameObject.transform.rotation);
+        Instantiate(healthPack, gameObject.transform.position + new Vector3(0,-1.5f,0), gameObject.transform.rotation);
+    }
+
+}

@@ -60,23 +60,20 @@ public class PlayerScript : MonoBehaviour {
     {
         string collTag = coll.gameObject.tag.ToLower();
 
-        if (collTag.Contains("health") || collTag.Contains("medic"))
-        {
-            HitByWeapon(-.5f);
-        }
-        else if (collTag.Contains("dead")) { } // do nothing
+        if (collTag.Contains("dead") || collTag.Contains("health")) { } // do nothing
         else
         {
-            HitByWeapon(.2f);
+            TakeDamage(.2f);
         }
     }
 
-    void HitByWeapon(float damage)
+    void TakeDamage(float damage)
     {
         health -= damage;  // health equals health minus damage received
 
         if (health <= 0)
         {
+            health = 0;
             Destroy(gameObject);  // if health is less than or equal to 0, it's dead
         } 
         else if (health >= 100)
@@ -173,7 +170,7 @@ public class PlayerScript : MonoBehaviour {
 
                 try
                 {
-                    hit.collider.SendMessage("HitByWeapon", 1, SendMessageOptions.RequireReceiver);  // let object know it's been hit, deal x damage
+                    hit.collider.SendMessage("TakeDamage", 1, SendMessageOptions.RequireReceiver);  // let object know it's been hit, deal x damage
                     hit.rigidbody.AddForceAtPosition(transform.up * 5, hit.point);  // push object that was hit
                 }
                 catch { }
@@ -187,7 +184,15 @@ public class PlayerScript : MonoBehaviour {
         }
         else if ((health >= 00) && (health < 25)) // if health is between 00 and 25
         {
-            
+            attackRepeatTime = 1;
+
+            Vector3 localOffset = new Vector3(0, 2f, 0);
+            Vector3 worldOffset = transform.rotation * localOffset;
+            Vector3 spawnPos = transform.position + worldOffset;
+
+            Instantiate(attackStage4, spawnPos, transform.rotation);  // spawn bullet
+
+            attackTime = Time.time + attackRepeatTime;  // reset attack timer
         }
     }
 }

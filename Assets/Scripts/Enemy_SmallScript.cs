@@ -50,14 +50,14 @@ public class Enemy_SmallScript : MonoBehaviour {
         }
     }
 
-    void HitByWeapon(int damage)
+    void TakeDamage(int damage)
     {
         health -= damage;  // health equals health minus damage received 
 
         if (health <= 0)
         {
-            var offsetPos = new Vector3(transform.position.x + .21f, transform.position.y + .29f);
-            Instantiate(destroyedShip, offsetPos, transform.rotation);  // spawn 
+//            var offsetPos = new Vector3(transform.position.x + .21f, transform.position.y + .29f);
+            Instantiate(destroyedShip, gameObject.transform.position, gameObject.transform.rotation);  // spawn 
             Destroy(gameObject);  // if health is less than or equal to 0, it's dead
         }
     }
