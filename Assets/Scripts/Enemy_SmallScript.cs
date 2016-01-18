@@ -6,8 +6,7 @@ public class Enemy_SmallScript : MonoBehaviour {
 
     public float speed = 20;
     public float health = 4;
-    public Transform player;
-    public GameObject weapon, destroyedShip;
+    public GameObject weapon, destroyedShip, player;
 
     float distanceFromPlayer, attackTime;
     float distanceToAttack = 25;
@@ -15,8 +14,8 @@ public class Enemy_SmallScript : MonoBehaviour {
 
     void FixedUpdate()
     {
-        distanceFromPlayer = Vector3.Distance(player.position, transform.position);
-
+        distanceFromPlayer = Vector3.Distance(player.transform.position, transform.position);
+        
         #region movement
         if (distanceFromPlayer > 40)
         {

@@ -3,13 +3,13 @@ using System.Collections;
 
 public class AsteroidScript : MonoBehaviour {
     public float health = 5;
-    public Transform player;
-    public GameObject healthPack, destroyedAsteroid;
+    public GameObject healthPack, destroyedAsteroid, player;
     float distanceFromPlayer;
     public float damage = 1;
 	
 	void FixedUpdate () {
-        distanceFromPlayer = Vector3.Distance(player.position, transform.position);
+        distanceFromPlayer = Vector3.Distance(player.transform.position, transform.position);
+        
         if (distanceFromPlayer > 40)
         {
             Destroy(gameObject);  // enemy is too far away, despawn them

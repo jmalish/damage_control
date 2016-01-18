@@ -30,7 +30,7 @@ public class PlayerScript : MonoBehaviour {
         laser = gameObject.GetComponent<LineRenderer>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         // Movement
         float accel = Input.GetAxis("Vertical");
@@ -108,7 +108,6 @@ public class PlayerScript : MonoBehaviour {
 
             if (hit)
             {
-                Debug.Log("hit");
                 try { hit.rigidbody.AddForceAtPosition(transform.up * 5, hit.point); } catch { } // push object that was hit
             }
         }
@@ -122,6 +121,8 @@ public class PlayerScript : MonoBehaviour {
             Instantiate(attackStage1, spawnPos, transform.rotation);  // spawn bullet
 
             attackTime = Time.time + attackRepeatTime;  // reset attack timer
+
+            TakeDamage(-.5f);
             #endregion
         }
         else if ((health >= 50) && (health < 75)) // if health is between 50 and 75
@@ -148,6 +149,8 @@ public class PlayerScript : MonoBehaviour {
             // multi shot
 
             attackTime = Time.time + attackRepeatTime;  // reset attack timer
+
+            TakeDamage(-1.5f);
             #endregion
         }
         else if ((health >= 25) && (health < 50)) // if health is between 25 and 50
@@ -180,9 +183,11 @@ public class PlayerScript : MonoBehaviour {
                 laser.SetPosition(0, spawnPos);  // start of laser
                 laser.SetPosition(1, spawnPos + (transform.up * 50));  // end of laser, since nothing is hit, just make it long enough to go offscreen
             }
+
+            TakeDamage(-.05f);
             #endregion
         }
-        else if ((health >= 00) && (health < 25)) // if health is between 00 and 25
+        else if ((health >= 05) && (health < 25)) // if health is between 00 and 25
         {
             attackRepeatTime = 1;
 
@@ -193,6 +198,12 @@ public class PlayerScript : MonoBehaviour {
             Instantiate(attackStage4, spawnPos, transform.rotation);  // spawn bullet
 
             attackTime = Time.time + attackRepeatTime;  // reset attack timer
+
+            TakeDamage(-5);
+        }
+        else if ((health >= 00) && (health < 5)) // if health is between 00 and 25
+        {
+            // nuclear explosion imminent
         }
     }
 }
