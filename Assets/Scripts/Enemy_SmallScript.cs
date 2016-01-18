@@ -6,11 +6,17 @@ public class Enemy_SmallScript : MonoBehaviour {
 
     public float speed = 20;
     public float health = 4;
-    public GameObject weapon, destroyedShip, player;
+    public GameObject weapon, destroyedShip;
+    GameObject player;
 
     float distanceFromPlayer, attackTime;
     float distanceToAttack = 25;
     float attackRepeatTime = .5f;
+
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
 
     void FixedUpdate()
     {
@@ -34,7 +40,7 @@ public class Enemy_SmallScript : MonoBehaviour {
 
             GetComponent<Rigidbody2D>().AddForce(gameObject.transform.up * speed * -.5f);  // move towards player
         }
-        else
+        else  // if enemy is in between distances to move towards and away player, just sit still
         {
             float zPos = Mathf.Atan2((player.transform.position.y - transform.position.y), player.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90;
             transform.eulerAngles = new Vector3(0, 0, zPos);  // turn towards player
@@ -55,7 +61,6 @@ public class Enemy_SmallScript : MonoBehaviour {
 
         if (health <= 0)
         {
-//            var offsetPos = new Vector3(transform.position.x + .21f, transform.position.y + .29f);
             Instantiate(destroyedShip, gameObject.transform.position, gameObject.transform.rotation);  // spawn 
             Destroy(gameObject);  // if health is less than or equal to 0, it's dead
         }
