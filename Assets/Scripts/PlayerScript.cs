@@ -8,14 +8,10 @@ public class PlayerScript : MonoBehaviour {
     public float accelSpeed = 40;
     public float turnSpeed = 10;
     public float attackRepeatTime = .4f;
-    public GameObject attackStage1;
-    public GameObject attackStage2;
-    public GameObject attackStage3;
-    public GameObject attackStage4;
+    public GameObject attackStage1, attackStage2, attackStage4;
 
     // UI Variables
-    public Text scoreboard_health;
-    public Text scoreboard_damage;
+    public Text scoreboardHealth, scoreboard_score;
     public Image healthbar;
     float healthBarScaleY, attackTime;
 
@@ -28,6 +24,9 @@ public class PlayerScript : MonoBehaviour {
     {
         healthBarScaleY = healthbar.rectTransform.transform.localScale.y;
         laser = gameObject.GetComponent<LineRenderer>();
+        //Material whiteDiffuseMat = new Material(Shader.Find("Unlit/Texture"));
+        //laser.material = whiteDiffuseMat;
+
     }
 
     void FixedUpdate()
@@ -82,8 +81,7 @@ public class PlayerScript : MonoBehaviour {
         }
 
         //scoreboard_health.text = "Health: " + Mathf.Round(health).ToString();
-        scoreboard_health.text = "Health: " + Mathf.Round(health).ToString();
-        scoreboard_damage.text = "Damage: " + Mathf.Round(100 - health).ToString();
+        scoreboardHealth.text = "Health: " + Mathf.Round(health).ToString();
 
         healthbar.rectTransform.localScale = new Vector3(health / 100, healthBarScaleY);
     }
@@ -92,6 +90,8 @@ public class PlayerScript : MonoBehaviour {
     {
         if (health >= 95)
         {
+            laser.SetColors(new Color(1,1,1,.33f), new Color(1,1,1,0));
+
             laser.SetWidth(.01f, 5);
             //line.GetComponent<Renderer>().material.mainTextureOffset = new Vector2(0, Time.time);  // makes laser "rotate", gives it movement
 
@@ -156,7 +156,8 @@ public class PlayerScript : MonoBehaviour {
         else if ((health >= 25) && (health < 50)) // if health is between 25 and 50
         {
             #region laser beam
-            //line.GetComponent<Renderer>().material.mainTextureOffset = new Vector2(0, Time.time);  // makes laser "rotate", gives it movement
+            laser.SetColors(new Color(0, .25f, 1, 1), new Color(1, 1, 1, 1));
+            laser.SetWidth(.15f, .15f);
 
             laser.enabled = true;
             
