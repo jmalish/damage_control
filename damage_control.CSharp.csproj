@@ -66,8 +66,10 @@
     <Compile Include="Assets\Scripts\AsteroidScript.cs" />
     <Compile Include="Assets\Scripts\BulletScript.cs" />
     <Compile Include="Assets\Scripts\CameraScript.cs" />
+    <Compile Include="Assets\Scripts\Enemy_Large_Script.cs" />
     <Compile Include="Assets\Scripts\Enemy_SmallScript.cs" />
     <Compile Include="Assets\Scripts\HealthPackScript.cs" />
+    <Compile Include="Assets\Scripts\MissileScript.cs" />
     <Compile Include="Assets\Scripts\PlasmaBallScript.cs" />
     <Compile Include="Assets\Scripts\PlayerScript.cs" />
     <Compile Include="Assets\Scripts\ShipDestroyedScript.cs" />

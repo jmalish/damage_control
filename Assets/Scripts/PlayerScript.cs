@@ -14,10 +14,11 @@ public class PlayerScript : MonoBehaviour {
     public Text scoreboardHealth, scoreboard_score;
     public Image healthbar;
     float healthBarScaleY, attackTime;
-
+    
     // other variables
     LineRenderer laser;
-    IEnumerator laserCoroutine;
+    bool exploding = false;
+    float colorValue = 1;
 
 
     void Start()
@@ -46,7 +47,15 @@ public class PlayerScript : MonoBehaviour {
         GetComponent<Rigidbody2D>().transform.Rotate(Vector3.back * turn * turnSpeed);  // if we want to turn ship with a and d versus point towards mouse
 
         // Weapons
-        if ((Input.GetButton("Fire1")) && (Time.time > attackTime))
+        if (health <= 5)
+        {
+            if (colorValue > 0)
+            {
+                colorValue -= .005f;
+                GetComponent<SpriteRenderer>().color = new Color(1, colorValue, colorValue, 1);  // fades ship to red
+            }
+        }
+        else if ((Input.GetButton("Fire1")) && (Time.time > attackTime))
         {
             FireWeapon();
         } else
@@ -204,7 +213,7 @@ public class PlayerScript : MonoBehaviour {
         }
         else if ((health >= 00) && (health < 5)) // if health is between 00 and 25
         {
-            // nuclear explosion imminent
+            // TODO: explosion
         }
     }
 }
