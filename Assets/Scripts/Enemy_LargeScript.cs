@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Enemy_Large_Script : MonoBehaviour {
+public class Enemy_LargeScript : MonoBehaviour {
 
     public float speed = 10;
     public float health = 10;

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: b60045a1781f8614ba3737e29303a735
-timeCreated: 1453147909
+timeCreated: 1453245416
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -12,6 +12,14 @@ TextureImporter:
     21300010: a10_destroyed_5
     21300012: a10_destroyed_6
     21300014: a10_destroyed_7
+    21300016: enemy_large_destroyed_0
+    21300018: enemy_large_destroyed_1
+    21300020: enemy_large_destroyed_2
+    21300022: enemy_large_destroyed_3
+    21300024: enemy_large_destroyed_4
+    21300026: enemy_large_destroyed_5
+    21300028: enemy_large_destroyed_6
+    21300030: enemy_large_destroyed_7
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -58,7 +66,7 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: a10_destroyed_0
+    - name: enemy_large_destroyed_0
       rect:
         serializedVersion: 2
         x: 193
@@ -97,7 +105,7 @@ TextureImporter:
         - {x: -26.5, y: 67}
         - {x: -27.5, y: 70}
         - {x: -32.5, y: 71}
-    - name: a10_destroyed_1
+    - name: enemy_large_destroyed_1
       rect:
         serializedVersion: 2
         x: 712
@@ -114,7 +122,7 @@ TextureImporter:
         - {x: 36, y: -124}
         - {x: 36, y: 105}
         - {x: 23, y: 124}
-    - name: a10_destroyed_2
+    - name: enemy_large_destroyed_2
       rect:
         serializedVersion: 2
         x: 885
@@ -141,7 +149,7 @@ TextureImporter:
         - {x: 137.5, y: -136.5}
         - {x: 137.5, y: -113.5}
         - {x: 111.5, y: 9.5}
-    - name: a10_destroyed_3
+    - name: enemy_large_destroyed_3
       rect:
         serializedVersion: 2
         x: 1238
@@ -163,7 +171,7 @@ TextureImporter:
         - {x: -91.5, y: -88}
         - {x: 53.5, y: -88}
         - {x: 116.5, y: -81}
-    - name: a10_destroyed_4
+    - name: enemy_large_destroyed_4
       rect:
         serializedVersion: 2
         x: 311
@@ -185,7 +193,7 @@ TextureImporter:
         - {x: 55, y: -55}
         - {x: 85, y: 14}
         - {x: 85, y: 47}
-    - name: a10_destroyed_5
+    - name: enemy_large_destroyed_5
       rect:
         serializedVersion: 2
         x: 662
@@ -202,7 +210,7 @@ TextureImporter:
         - {x: 86, y: -59.5}
         - {x: 86, y: 42.5}
         - {x: 29, y: 59.5}
-    - name: a10_destroyed_6
+    - name: enemy_large_destroyed_6
       rect:
         serializedVersion: 2
         x: 1015
@@ -224,7 +232,7 @@ TextureImporter:
         - {x: 110, y: -128.5}
         - {x: 110, y: 48.5}
         - {x: 55, y: 128.5}
-    - name: a10_destroyed_7
+    - name: enemy_large_destroyed_7
       rect:
         serializedVersion: 2
         x: 1354
