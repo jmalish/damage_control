@@ -11,14 +11,13 @@ public class PlayerScript : MonoBehaviour {
     public GameObject attackStage1, attackStage2, attackStage4;
 
     // UI Variables
-    public Text scoreboardHealth, scoreboard_score;
-    public Image healthbar;
+    public Text scoreboardHealth, scoreboard_score, explosionImminent;
+    public Image healthbar, explosionCircle;
     float healthBarScaleY, attackTime;
     
     // other variables
     LineRenderer laser;
     bool exploding = false;
-    float colorValue = 1;
 
 
     void Start()
@@ -28,6 +27,8 @@ public class PlayerScript : MonoBehaviour {
         //Material whiteDiffuseMat = new Material(Shader.Find("Unlit/Texture"));
         //laser.material = whiteDiffuseMat;
 
+        explosionImminent.enabled = false;
+        explosionCircle.enabled = false;
     }
 
     void FixedUpdate()
@@ -49,16 +50,17 @@ public class PlayerScript : MonoBehaviour {
         // Weapons
         if (health <= 5)
         {
-            if (colorValue > 0)
+            if (!exploding)
             {
-                colorValue -= .005f;
-                GetComponent<SpriteRenderer>().color = new Color(1, colorValue, colorValue, 1);  // fades ship to red
+                StartCoroutine(NuclearExplosion());
+                StartCoroutine(FlashImminentText());
             }
         }
         else if ((Input.GetButton("Fire1")) && (Time.time > attackTime))
         {
             FireWeapon();
-        } else
+        }
+        else
         {
             laser.enabled = false;
         }
@@ -82,7 +84,8 @@ public class PlayerScript : MonoBehaviour {
         if (health <= 0)
         {
             health = 0;
-            Destroy(gameObject);  // if health is less than or equal to 0, it's dead
+            // Destroy(gameObject);  // if health is less than or equal to 0, it's dead
+            
         } 
         else if (health >= 100)
         {
@@ -213,7 +216,79 @@ public class PlayerScript : MonoBehaviour {
         }
         else if ((health >= 00) && (health < 5)) // if health is between 00 and 25
         {
-            // TODO: explosion
+            // do nothing, this is handled elsewhere
         }
+    }
+
+    IEnumerator FlashImminentText()
+    {
+        float alphaValue = 0;
+        bool rising = true;
+
+        explosionImminent.enabled = true;
+
+        while (true)
+        {
+            while (rising)
+            {
+                alphaValue += .015f;
+                explosionImminent.color = new Color(1, 0, 0, alphaValue);
+                yield return new WaitForSeconds(.005f);
+
+                if (alphaValue >= 1)
+                {
+                    rising = false;
+                }
+            }
+
+            while (alphaValue > 0)
+            {
+                alphaValue -= .015f;
+                explosionImminent.color = new Color(1, 0, 0, alphaValue);
+                yield return new WaitForSeconds(.005f);
+
+                if (alphaValue <= 0)
+                {
+                    rising = true;
+                }
+            }
+        }
+    }
+
+    IEnumerator NuclearExplosion()
+    {
+        exploding = true;
+        for (float colorValue = 1; colorValue > 0; colorValue -= .025f)
+        {
+            GetComponent<SpriteRenderer>().color = new Color(1, colorValue, colorValue, 1);  // fades ship to red
+            yield return new WaitForSeconds(.05f);
+        }
+
+        yield return new WaitForSeconds(1);
+
+        StartCoroutine(EnableExplosionCircle());
+        StartCoroutine(ExplosionCircleIncreaseAlpha());
+    }
+
+    IEnumerator EnableExplosionCircle()
+    {
+        explosionCircle.enabled = true;
+
+        for (float size = .1f; size < 15; size += .125f)
+        {
+            explosionCircle.transform.localScale = new Vector3(size, size);
+            yield return new WaitForSeconds(.02f);
+        }
+    }
+
+    IEnumerator ExplosionCircleIncreaseAlpha()
+    {
+        for (float colorValue = 0; colorValue < 1; colorValue += .025f)
+        {
+            explosionCircle.GetComponent<Image>().color = new Color(1, 1, 1, colorValue);  // brings circle to solid color
+            yield return new WaitForSeconds(.05f);
+        }
+
+        // when this is done, show game over screen
     }
 }
