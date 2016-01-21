@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\BulletScript.cs" />
     <Compile Include="Assets\Scripts\CameraScript.cs" />
     <Compile Include="Assets\Scripts\Enemy_LargeScript.cs" />
+    <Compile Include="Assets\Scripts\Enemy_MediumScript.cs" />
     <Compile Include="Assets\Scripts\Enemy_SmallScript.cs" />
     <Compile Include="Assets\Scripts\HealthPackScript.cs" />
     <Compile Include="Assets\Scripts\MissileScript.cs" />
