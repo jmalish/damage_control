@@ -62,18 +62,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\AsteroidDestroyedScript.cs" />
-    <Compile Include="Assets\Scripts\AsteroidScript.cs" />
-    <Compile Include="Assets\Scripts\BulletScript.cs" />
-    <Compile Include="Assets\Scripts\CameraScript.cs" />
-    <Compile Include="Assets\Scripts\Enemy_LargeScript.cs" />
-    <Compile Include="Assets\Scripts\Enemy_MediumScript.cs" />
-    <Compile Include="Assets\Scripts\Enemy_SmallScript.cs" />
-    <Compile Include="Assets\Scripts\HealthPackScript.cs" />
-    <Compile Include="Assets\Scripts\MissileScript.cs" />
-    <Compile Include="Assets\Scripts\PlasmaBallScript.cs" />
-    <Compile Include="Assets\Scripts\PlayerScript.cs" />
-    <Compile Include="Assets\Scripts\ShipDestroyedScript.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Enemy_LargeScript.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Enemy_MediumScript.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Enemy_SmallScript.cs" />
+    <Compile Include="Assets\Scripts\Enemies\ShipDestroyedScript.cs" />
+    <Compile Include="Assets\Scripts\Game\CameraScript.cs" />
+    <Compile Include="Assets\Scripts\Game\PlayerScript.cs" />
+    <Compile Include="Assets\Scripts\Game\ScoreManager.cs" />
+    <Compile Include="Assets\Scripts\Game\SpawnManagerScript.cs" />
+    <Compile Include="Assets\Scripts\Other\AsteroidDestroyedScript.cs" />
+    <Compile Include="Assets\Scripts\Other\AsteroidScript.cs" />
+    <Compile Include="Assets\Scripts\Weapons\BulletScript.cs" />
+    <Compile Include="Assets\Scripts\Weapons\HealthPackScript.cs" />
+    <Compile Include="Assets\Scripts\Weapons\MissileScript.cs" />
+    <Compile Include="Assets\Scripts\Weapons\PlasmaBallScript.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

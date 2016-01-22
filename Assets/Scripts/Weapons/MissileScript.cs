@@ -47,8 +47,7 @@ public class MissileScript : MonoBehaviour {
         Vector3 localOffset = new Vector3(0, .5f, 0);
         Vector3 worldOffset = transform.rotation * localOffset;
         Vector3 spawnPos = transform.position + worldOffset;
-
-        Debug.Log("missile hit");
+        
         coll.gameObject.SendMessage("TakeDamage", damage);
         Destroy(gameObject);
         GameObject createdExplosion = (GameObject)Instantiate(explosion, spawnPos, gameObject.transform.rotation);

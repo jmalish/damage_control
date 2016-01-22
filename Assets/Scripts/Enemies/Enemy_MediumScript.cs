@@ -58,8 +58,6 @@ public class Enemy_MediumScript : MonoBehaviour {
 
     void TakeDamage(int damage)
     {
-        Debug.Log(damage);
-
         health -= damage;  // health equals health minus damage received 
 
         if (health <= 0)

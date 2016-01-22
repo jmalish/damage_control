@@ -4,7 +4,7 @@ using System.Collections;
 
 public class PlayerScript : MonoBehaviour {
     // ship variables
-    public float health = 100;
+    public static float health = 100;
     public float accelSpeed = 40;
     public float turnSpeed = 10;
     public float attackRepeatTime = .4f;

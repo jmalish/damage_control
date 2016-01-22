@@ -23,9 +23,7 @@ public class Enemy_LargeScript : MonoBehaviour {
     void FixedUpdate()
     {
         distanceFromPlayer = Vector3.Distance(player.transform.position, transform.position);
-
-        Debug.Log(distanceFromPlayer);
-
+        
         #region movement
         if (flyAway)
         {
