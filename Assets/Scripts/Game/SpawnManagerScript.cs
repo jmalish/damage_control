@@ -12,6 +12,8 @@ public class SpawnManagerScript : MonoBehaviour {
 
     void Start()
     {
+        canSpawn = false;
+
         player = GameObject.FindGameObjectWithTag("Player");
 
         enemies.Add(enemySmall);

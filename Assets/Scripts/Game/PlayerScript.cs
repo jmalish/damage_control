@@ -30,6 +30,16 @@ public class PlayerScript : MonoBehaviour {
 
     void Start()
     {
+        // resetting variables
+        health = 100;
+        gameOver = false;
+        exploding = false;
+        tutorial = true;
+        canShoot = true;
+        warned = false;
+        selfDestructing = false;
+        weaponsExplained = false;
+
         Time.timeScale = 1;
         healthBarScaleY = healthbar.rectTransform.transform.localScale.y;
         laser = gameObject.GetComponent<LineRenderer>();

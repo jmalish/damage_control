@@ -16,6 +16,8 @@ public class StoryManagerScript : MonoBehaviour {
 
     void Start()
     {
+        goingToMainMenu = true;
+
         dPanel.SetActive(false);
         if (GetLines() == 0)
         {

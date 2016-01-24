@@ -19,6 +19,11 @@ public class ScoreManager : MonoBehaviour {
         score = 0;
     }
 
+    void Start()
+    {
+        gameOver = false;
+    }
+
     void Update()
     {
         scoreText.text = "Score: " + score;
