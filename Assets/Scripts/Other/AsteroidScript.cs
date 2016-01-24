@@ -19,7 +19,7 @@ public class AsteroidScript : MonoBehaviour {
 	void FixedUpdate () {
         distanceFromPlayer = Vector3.Distance(player.transform.position, transform.position);
         
-        if (distanceFromPlayer > 40)
+        if (distanceFromPlayer > 60)
         {
             Destroy(gameObject);  // enemy is too far away, despawn them
         }

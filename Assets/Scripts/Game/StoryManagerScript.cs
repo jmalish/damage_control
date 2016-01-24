@@ -10,6 +10,7 @@ public class StoryManagerScript : MonoBehaviour {
     public Text dTextBox;
     public GameObject dPanel;
     bool dialogueInProgress, stopPlayerMovement;
+    bool goingToMainMenu = false;
 
     public string[] dLines;
 
@@ -57,6 +58,7 @@ public class StoryManagerScript : MonoBehaviour {
         {
             StartCoroutine(Dialogue(7, 8));
             ScoreManager.gameOver = true;
+            StartCoroutine(GoToMainMenu());
         }
         else if (storyStage == 3) // attempting to leave tutorial area
         {
@@ -65,7 +67,7 @@ public class StoryManagerScript : MonoBehaviour {
         else if (storyStage == 4) // continued to leave tutorial area, player will self destruct
         {
             StartCoroutine(Dialogue(15, 17));
-            StartCoroutine(PlayerSelfDestructed());
+            StartCoroutine(GoToMainMenu());
         }
         else if (storyStage == 5) // tutorial complete
         {
@@ -75,6 +77,10 @@ public class StoryManagerScript : MonoBehaviour {
         else if (storyStage == 6) // explaining weapons
         {
             StartCoroutine(Dialogue(26, 27));
+        }
+        else if (storyStage == 7 && !goingToMainMenu) // general game over
+        {
+            StartCoroutine(GoToMainMenu());
         }
     }
 
@@ -111,9 +117,11 @@ public class StoryManagerScript : MonoBehaviour {
         Time.timeScale = 1;
     }
 
-    IEnumerator PlayerSelfDestructed()
+    IEnumerator GoToMainMenu()
     {
-        yield return new WaitForSeconds(3);
+        goingToMainMenu = true;
+
+        yield return new WaitForSeconds(5);
 
         SceneManager.LoadScene(0);
     }

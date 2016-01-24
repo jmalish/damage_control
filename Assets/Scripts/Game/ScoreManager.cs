@@ -6,7 +6,7 @@ public class ScoreManager : MonoBehaviour {
 
 	public static int score;
     public GameObject tutorialField;
-    public Text finalScoreText;
+    public Text finalScoreText, gameOverText;
     Text scoreText;
     bool tutorial = true;
     bool fading = false;
@@ -61,10 +61,9 @@ public class ScoreManager : MonoBehaviour {
 
         for (float alphaValue = 0; alphaValue < 1; alphaValue += .03f)
         {
+            //gameOverText.color = new Color(0, 0, 0, alphaValue);
             finalScoreText.color = new Color(0, 0, 0, alphaValue);
             yield return new WaitForSeconds(.02f);
         }
-
-        Time.timeScale = 0;
     }
 }

@@ -30,6 +30,7 @@ public class PlayerScript : MonoBehaviour {
 
     void Start()
     {
+        Time.timeScale = 1;
         healthBarScaleY = healthbar.rectTransform.transform.localScale.y;
         laser = gameObject.GetComponent<LineRenderer>();
 
@@ -96,7 +97,7 @@ public class PlayerScript : MonoBehaviour {
             tutorial = false; // tutorial is complete
             SpawnManagerScript.canSpawn = true;
         }
-        else if (health < 95 && tutorial && !PlayerScript.gameOver)
+        else if (health < 95 && tutorial && !gameOver)
         {
             StoryManagerScript.storyStage = 2;
         }
@@ -142,10 +143,13 @@ public class PlayerScript : MonoBehaviour {
 
         if (health <= 0)
         {
+            gameOver = true;
             health = 0;
             ForceEnemiesToFlee();
             StartCoroutine(EnableExplosionCircle());
             StartCoroutine(ExplosionCircleIncreaseAlpha());
+
+            StoryManagerScript.storyStage = 7;
         } 
         else if (health >= 100)
         {
