@@ -1,0 +1,28 @@
+# tutorial - 1
+So you're the new guy?
+Hopefully you last longer than the last guy, dude managed to space himself in 2 days flat.
+Anyways, looks like we've got some asteroids that need clearing before construction crews can get to work.
+Your ship's got a simple propulsion beam on the front, just pull the trigger and push the asteroids out of the box.
+
+# damage during tutorial - 2
+Are you serious?? Your resume said you could fly this thing!
+Get the hell out of my ship!
+
+# leaving the tutorial site before tutorial completion - 3
+Hey! Where the hell do you think you're going?!
+Get back to the job site right now!
+
+# continue on after warning - 4
+Well, I have always wanted to push this button.
+*Warnings light up your cockpit*
+The brightest one reads                                        *SELF DESTRUCTING*
+
+# tutorial complete - 5
+Alright, that'll do here. Looks like our next job is to cle-
+Hold on, the scanner's showing some weird activity near you.
+Wait, this... this doesn't make any sense, there's not supposed to be anything out here.
+You've got to get out of there right now, this is ba-
+
+# first damage taken, tell player about how weapons work - 6
+*You've taken damage, but it looks like your ship is attempting to fix the issue by ejecting plasma to cool down the ship*
+*The more damage you've taken, the more plasma the ship attempts to eject*

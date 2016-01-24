@@ -7,8 +7,8 @@ public class SpawnManagerScript : MonoBehaviour {
     GameObject player;
     public GameObject enemySmall, enemyMedium, enemyLarge, asteroidSmall, asteroidLarge;
     public List<GameObject> enemies, asteroids;
-    float spawnTimer = 0;
-    float spawnRepeatTimer = 10;
+    float spawnTimer;
+    public static bool canSpawn = false;
 
     void Start()
     {
@@ -22,13 +22,13 @@ public class SpawnManagerScript : MonoBehaviour {
         asteroids.Add(asteroidLarge);
 
         InvokeRepeating("SpawnEnemy", 1, 1);
-        InvokeRepeating("SpawnAsteroid", 1, 15);
-        // setup difficulty
+        InvokeRepeating("SpawnAsteroid", 1, 10);
     }
 
     void SpawnEnemy()
     {
         playerHealth = PlayerScript.health;
+        int score = ScoreManager.score;
 
         if (Time.time > spawnTimer)
         {
@@ -37,7 +37,7 @@ public class SpawnManagerScript : MonoBehaviour {
                 return;
             }
 
-            if (!PlayerScript.tutorial)
+            if (canSpawn)
             {
                 int enemyID = Random.Range(0, enemies.Count); // choose which enemy to spawn
 
@@ -53,7 +53,22 @@ public class SpawnManagerScript : MonoBehaviour {
 
                 Instantiate(enemies[enemyID], spawnPos, Quaternion.identity);
 
-                spawnTimer = Time.time + spawnRepeatTimer;
+                if (score < 1000)
+                {
+                    spawnTimer = Time.time + 10;
+                }
+                else if (score >= 2500 && score < 2000)
+                {
+                    spawnTimer = Time.time + 5;
+                }
+                else if (score >= 3000)
+                {
+                    spawnTimer = Time.time + 3;
+                }
+                else if (score >= 5000)
+                {
+                    spawnTimer = Time.time + 2;
+                }
             }
         }
     }
@@ -69,7 +84,7 @@ public class SpawnManagerScript : MonoBehaviour {
 
         if (!PlayerScript.tutorial)
         {
-            int asteroidID = Random.Range(0, asteroids.Count); // choose which enemy to spawn
+            int asteroidID = Random.Range(0, asteroids.Count); // choose which asteroid to spawn
 
             // get player pos
             float playerX = player.transform.position.x;
@@ -81,7 +96,7 @@ public class SpawnManagerScript : MonoBehaviour {
 
             Vector3 spawnPos = new Vector3(spawnX, spawnY);
 
-            Instantiate(enemies[asteroidID], spawnPos, Quaternion.identity);
+            Instantiate(asteroids[asteroidID], spawnPos, Quaternion.identity);
         }
     }
 }

@@ -8,29 +8,35 @@ public class PlayerScript : MonoBehaviour {
     public float accelSpeed = 40;
     public float turnSpeed = 10;
     public float attackRepeatTime = .4f;
-    public GameObject attackStage1, attackStage2, attackStage4;
+    public GameObject attackStage1, attackStage2, attackStage4, explosion;
 
     // UI Variables
-    public Text scoreboardHealth, scoreboard_score, explosionImminent;
+    public Text scoreboardHealth, explosionImminent;
     public Image healthbar, explosionCircle;
     float healthBarScaleY, attackTime;
-    
+    public static bool gameOver = false;
+    public GameObject storyScript;
+
     // other variables
     LineRenderer laser;
     bool exploding = false;
     public static bool tutorial = true;
+    public static bool canShoot = true;
     float distanceFromStart;
+    bool warned = false;
+    bool selfDestructing = false;
+    bool weaponsExplained = false;
 
 
     void Start()
     {
         healthBarScaleY = healthbar.rectTransform.transform.localScale.y;
         laser = gameObject.GetComponent<LineRenderer>();
-        //Material whiteDiffuseMat = new Material(Shader.Find("Unlit/Texture"));
-        //laser.material = whiteDiffuseMat;
 
         explosionImminent.enabled = false;
         explosionCircle.enabled = false;
+
+        StoryManagerScript.storyStage = 1;
     }
 
     void FixedUpdate()
@@ -43,7 +49,7 @@ public class PlayerScript : MonoBehaviour {
         }
         else if (accel < 0)
         {
-            GetComponent<Rigidbody2D>().AddForce(gameObject.transform.up * accelSpeed * accel/2);
+            GetComponent<Rigidbody2D>().AddForce(gameObject.transform.up * accelSpeed * accel / 2);
         }
 
         float turn = Input.GetAxis("Horizontal");
@@ -83,23 +89,40 @@ public class PlayerScript : MonoBehaviour {
         }
         #endregion weapons
 
+        #region dialogue/story
         if (ScoreManager.score > 4 && tutorial)
         {
-            tutorial = false;
-            Debug.Log("Tut complete");
+            StoryManagerScript.storyStage = 5;
+            tutorial = false; // tutorial is complete
+            SpawnManagerScript.canSpawn = true;
         }
+        else if (health < 95 && tutorial && !PlayerScript.gameOver)
+        {
+            StoryManagerScript.storyStage = 2;
+        }
+        else if (health < 95 && !weaponsExplained)
+        {
+            StoryManagerScript.storyStage = 6;
+            weaponsExplained = true;
+        }
+        
 
         distanceFromStart = Vector3.Distance(new Vector3(0,0), transform.position);
         if (distanceFromStart > 35 && distanceFromStart < 50 && tutorial)
         {
-            // player not done with tutorial yet, yell at them
-            Debug.Log("where you going?");
+            if (!warned)
+            {
+                // player not done with tutorial yet, yell at them
+                StoryManagerScript.storyStage = 3;
+                warned = true;
+            }
         }
-        else if (distanceFromStart > 50 && tutorial)
+        else if (distanceFromStart > 50 && tutorial && !selfDestructing)
         {
             // that jerk is stealing our ship, self destruct
-            Destroy(gameObject);
+            StartCoroutine(SelfDestruct());
         }
+        #endregion dialogue/story
     }
 
     void OnCollisionStay2D(Collision2D coll)
@@ -120,8 +143,9 @@ public class PlayerScript : MonoBehaviour {
         if (health <= 0)
         {
             health = 0;
-            // Destroy(gameObject);  // if health is less than or equal to 0, it's dead
-            
+            ForceEnemiesToFlee();
+            StartCoroutine(EnableExplosionCircle());
+            StartCoroutine(ExplosionCircleIncreaseAlpha());
         } 
         else if (health >= 100)
         {
@@ -136,6 +160,11 @@ public class PlayerScript : MonoBehaviour {
 
     void FireWeapon()
     {
+        if (!canShoot)
+        {
+            return;
+        }
+
         if (health >= 95)
         {
             #region force field
@@ -314,12 +343,46 @@ public class PlayerScript : MonoBehaviour {
 
     IEnumerator ExplosionCircleIncreaseAlpha()
     {
-        for (float colorValue = 0; colorValue < 1; colorValue += .025f)
+        for (float colorValue = 0; colorValue < 1; colorValue += .035f)
         {
             explosionCircle.GetComponent<Image>().color = new Color(1, 1, 1, colorValue);  // brings circle to solid color
             yield return new WaitForSeconds(.05f);
         }
 
-        // when this is done, show game over screen
+        yield return new WaitForSeconds(.75f);
+
+
+        GameObject[] allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        foreach (GameObject enemy in allEnemies)
+        {
+            enemy.SendMessage("TakeDamage", 999);  // kill all enemies still alive
+        }
+
+        gameOver = true;
+}
+
+    IEnumerator SelfDestruct()
+    {
+        selfDestructing = true;
+        StoryManagerScript.storyStage = 4;
+
+        yield return new WaitForSeconds(1);
+
+        Destroy(gameObject);
+        GameObject createdExplosion = (GameObject)Instantiate(explosion, transform.position, transform.rotation);
+        Destroy(createdExplosion, .25f);
+    }
+
+    void ForceEnemiesToFlee()  // tells enemies that we're about to explode, they should probably run
+    {
+        GameObject[] allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        foreach (GameObject enemy in allEnemies)
+        {
+            enemy.SendMessage("Flee");
+        }
+
+        Time.timeScale = .5f;
     }
 }

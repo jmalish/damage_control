@@ -12,6 +12,7 @@ public class Enemy_MediumScript : MonoBehaviour {
     float distanceFromPlayer, attackTime;
     float distanceToAttack = 25;
     float attackRepeatTime = 1f;
+    bool fleeing = false;
 
     void Start()
     {
@@ -23,33 +24,48 @@ public class Enemy_MediumScript : MonoBehaviour {
         distanceFromPlayer = Vector3.Distance(player.transform.position, transform.position);
 
         #region movement
-        if (distanceFromPlayer > 40)
+        if (!fleeing)
         {
-            Destroy(gameObject);  // enemy is too far away, despawn them
+            if (distanceFromPlayer > 40)
+            {
+                Destroy(gameObject);  // enemy is too far away, despawn them
+            }
+            else if (distanceFromPlayer > 10)
+            {
+                float zPos = Mathf.Atan2((player.transform.position.y - transform.position.y), player.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90;
+                transform.eulerAngles = new Vector3(0, 0, zPos);  // turn towards player
+
+                GetComponent<Rigidbody2D>().AddForce(gameObject.transform.up * speed);  // move towards player
+            }
+            else if ((distanceFromPlayer > 0) && (distanceFromPlayer <= 7))
+            {
+                float zPos = Mathf.Atan2((player.transform.position.y - transform.position.y), player.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90;
+                transform.eulerAngles = new Vector3(0, 0, zPos);  // turn towards player
+
+                GetComponent<Rigidbody2D>().AddForce(gameObject.transform.up * speed * -.5f);  // move towards player
+            }
+            else  // if enemy is in between distances to move towards and away player, just sit still
+            {
+                float zPos = Mathf.Atan2((player.transform.position.y - transform.position.y), player.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90;
+                transform.eulerAngles = new Vector3(0, 0, zPos);  // turn towards player
+            }
         }
-        else if (distanceFromPlayer > 10)
+        else
         {
             float zPos = Mathf.Atan2((player.transform.position.y - transform.position.y), player.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90;
-            transform.eulerAngles = new Vector3(0, 0, zPos);  // turn towards player
+            transform.eulerAngles = new Vector3(0, 0, -zPos);  // turn towards player
 
             GetComponent<Rigidbody2D>().AddForce(gameObject.transform.up * speed);  // move towards player
-        }
-        else if ((distanceFromPlayer > 0) && (distanceFromPlayer <= 7))
-        {
-            float zPos = Mathf.Atan2((player.transform.position.y - transform.position.y), player.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90;
-            transform.eulerAngles = new Vector3(0, 0, zPos);  // turn towards player
 
-            GetComponent<Rigidbody2D>().AddForce(gameObject.transform.up * speed * -.5f);  // move towards player
-        }
-        else  // if enemy is in between distances to move towards and away player, just sit still
-        {
-            float zPos = Mathf.Atan2((player.transform.position.y - transform.position.y), player.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90;
-            transform.eulerAngles = new Vector3(0, 0, zPos);  // turn towards player
+            if (distanceFromPlayer > 40)
+            {
+                Destroy(gameObject);  // enemy is too far away, despawn them
+            }
         }
         #endregion movement
 
         // make sure enemy is close enough, and keep it from shooting a billion bullets at once
-        if ((distanceFromPlayer < distanceToAttack) && (Time.time > attackTime))
+        if ((distanceFromPlayer < distanceToAttack) && (Time.time > attackTime && !fleeing))
         {
             StartCoroutine(FireWeapon());
             attackTime = Time.time + attackRepeatTime;  // reset attack timer
@@ -81,5 +97,11 @@ public class Enemy_MediumScript : MonoBehaviour {
             Instantiate(weapon, spawnPos, transform.rotation);  // spawn bullet
             yield return new WaitForSeconds(.2f);
         }
+    }
+
+    void Flee()
+    {
+        // speed = speed / 2;
+        fleeing = true;
     }
 }

@@ -3,7 +3,8 @@ using System.Collections;
 
 public class MissileScript : MonoBehaviour {
     
-    public GameObject player, explosion;
+    public GameObject explosion;
+    GameObject player;
     public float speed = 25;
     public float damage = 10;
     float distanceFromPlayer, spawnTime;
@@ -19,7 +20,7 @@ public class MissileScript : MonoBehaviour {
     {
         distanceFromPlayer = Vector3.Distance(player.transform.position, transform.position);
 
-        if (Time.time - spawnTime < .75f)
+        if (Time.time - spawnTime < .5f)
         {
             GetComponent<Rigidbody2D>().AddForce(gameObject.transform.up * speed);  // move forwards
         }

@@ -14,6 +14,7 @@ public class Enemy_LargeScript : MonoBehaviour {
     float attackRepeatTime = 1;
     bool flyAway = false;
     bool fireLeft = true; // used to tell enemy which missile to shoot next
+    public bool fleeing = false;
 
     void Start()
     {
@@ -23,37 +24,55 @@ public class Enemy_LargeScript : MonoBehaviour {
     void FixedUpdate()
     {
         distanceFromPlayer = Vector3.Distance(player.transform.position, transform.position);
-        
+
         #region movement
-        if (flyAway)
+        if (!fleeing)
         {
-            if (Time.time - flyAwayTime > 3)
+            if (flyAway)
             {
-                flyAway = false;
+                if (Time.time - flyAwayTime > 4)
+                {
+                    flyAway = false;
+                    attackTime = Time.time + .3f;  // reset attack timer
+                }
+                else
+                {
+                    float zPos = Mathf.Atan2((player.transform.position.y - transform.position.y), player.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90;
+                    transform.eulerAngles = new Vector3(0, 0, -zPos);  // turn away from player
+
+                    GetComponent<Rigidbody2D>().AddForce(gameObject.transform.up * speed);  // move away from player
+                }
             }
-            else
+            else if (distanceFromPlayer > 50)
+            {
+                Destroy(gameObject);  // enemy is too far away, despawn them
+            }
+            else if (distanceFromPlayer > 10)
             {
                 float zPos = Mathf.Atan2((player.transform.position.y - transform.position.y), player.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90;
-                transform.eulerAngles = new Vector3(0, 0, -zPos);  // turn away from player
+                transform.eulerAngles = new Vector3(0, 0, zPos);  // turn towards player
 
-                GetComponent<Rigidbody2D>().AddForce(gameObject.transform.up * speed);  // move away from player
+                GetComponent<Rigidbody2D>().AddForce(gameObject.transform.up * speed);  // move towards player
+            }
+            else if (distanceFromPlayer <= 10)
+            {
+                flyAway = true;
+                flyAwayTime = Time.time;
             }
         }
-        else if (distanceFromPlayer > 50)
-        {
-            Destroy(gameObject);  // enemy is too far away, despawn them
-        }
-        else if (distanceFromPlayer > 10)
-        {
-            float zPos = Mathf.Atan2((player.transform.position.y - transform.position.y), player.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90;
-            transform.eulerAngles = new Vector3(0, 0, zPos);  // turn towards player
-
-            GetComponent<Rigidbody2D>().AddForce(gameObject.transform.up * speed);  // move towards player
-        }
-        else if (distanceFromPlayer <= 10)
+        else
         {
             flyAway = true;
-            flyAwayTime = Time.time;
+
+            float zPos = Mathf.Atan2((player.transform.position.y - transform.position.y), player.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90;
+            transform.eulerAngles = new Vector3(0, 0, -zPos);  // turn towards player
+
+            GetComponent<Rigidbody2D>().AddForce(gameObject.transform.up * speed);  // move towards player
+
+            if (distanceFromPlayer > 40)
+            {
+                Destroy(gameObject);  // enemy is too far away, despawn them
+            }
         }
         #endregion movement
 
@@ -97,5 +116,11 @@ public class Enemy_LargeScript : MonoBehaviour {
             Instantiate(weapon, spawnPos, transform.rotation);  // spawn bullet
             fireLeft = true;
         }
+    }
+
+    void Flee()
+    {
+        // speed = speed / 2;
+        fleeing = true;
     }
 }
