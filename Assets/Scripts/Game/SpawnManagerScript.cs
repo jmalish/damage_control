@@ -12,7 +12,7 @@ public class SpawnManagerScript : MonoBehaviour {
 
     void Start()
     {
-        canSpawn = false;
+        canSpawn = false
 
         player = GameObject.FindGameObjectWithTag("Player");
 
@@ -55,19 +55,19 @@ public class SpawnManagerScript : MonoBehaviour {
 
                 Instantiate(enemies[enemyID], spawnPos, Quaternion.identity);
 
-                if (score < 1000)
+                if (score < 500)
                 {
                     spawnTimer = Time.time + 10;
                 }
-                else if (score >= 2500 && score < 2000)
+                else if (score >= 500 && score < 1000)
                 {
                     spawnTimer = Time.time + 5;
                 }
-                else if (score >= 3000)
+                else if (score >= 2000)
                 {
                     spawnTimer = Time.time + 3;
                 }
-                else if (score >= 5000)
+                else if (score >= 3000)
                 {
                     spawnTimer = Time.time + 2;
                 }
