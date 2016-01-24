@@ -12,7 +12,7 @@ public class SpawnManagerScript : MonoBehaviour {
 
     void Start()
     {
-        canSpawn = false
+        canSpawn = false;
 
         player = GameObject.FindGameObjectWithTag("Player");
 
