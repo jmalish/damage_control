@@ -13,14 +13,22 @@ public class Enemy_MediumScript : MonoBehaviour {
     float distanceToAttack = 25;
     float attackRepeatTime = 1f;
     bool fleeing = false;
+    bool doubleValue = false;
 
     void Start()
     {
+        fleeing = false;
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
     void FixedUpdate()
     {
+        if (ScoreManager.score > 3000 && !doubleValue)
+        {
+            value = value * 2;
+            doubleValue = true;
+        }
+
         distanceFromPlayer = Vector3.Distance(player.transform.position, transform.position);
 
         #region movement

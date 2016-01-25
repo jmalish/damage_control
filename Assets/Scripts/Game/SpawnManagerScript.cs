@@ -55,21 +55,25 @@ public class SpawnManagerScript : MonoBehaviour {
 
                 Instantiate(enemies[enemyID], spawnPos, Quaternion.identity);
 
-                if (score < 500)
+                if (score < 250)
                 {
-                    spawnTimer = Time.time + 10;
+                    spawnTimer = Time.time + 7;
                 }
-                else if (score >= 500 && score < 1000)
+                else if (score >= 250 && score < 500)
                 {
                     spawnTimer = Time.time + 5;
                 }
-                else if (score >= 2000)
+                else if (score >= 500 && score < 1000)
                 {
                     spawnTimer = Time.time + 3;
                 }
-                else if (score >= 3000)
+                else if (score >= 1500 && score < 2000)
                 {
                     spawnTimer = Time.time + 2;
+                }
+                else if (score >= 2000)
+                {
+                    spawnTimer = Time.time + 1;
                 }
             }
         }
